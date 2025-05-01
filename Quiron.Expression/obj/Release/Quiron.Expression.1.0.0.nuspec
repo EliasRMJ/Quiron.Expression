@@ -13,7 +13,7 @@
     <releaseNotes>Create new package.</releaseNotes>
     <copyright>MIT</copyright>
     <tags>quiron,expression</tags>
-    <repository type="git" url="https://github.com/EliasRMJ/Quiron.Expression" commit="28fa7dca08ad914727e3e3de0d912e358b743368" />
+    <repository type="git" url="https://github.com/EliasRMJ/Quiron.Expression" commit="8c6a731a49f35b39bbce2c3d409a51d914a90e6d" />
     <dependencies>
       <group targetFramework="net9.0">
         <dependency id="System.Linq" version="4.3.0" exclude="Build,Analyzers" />

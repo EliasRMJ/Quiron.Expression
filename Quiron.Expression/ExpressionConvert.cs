@@ -2,7 +2,7 @@
 
 namespace Quiron.Expression
 {
-    public abstract class ExpressionConvert : IExpressionConvert
+    public class ExpressionConvert : IExpressionConvert
     {
         #region Public methods
         public virtual Expression<Func<TTarget, bool>> Builder<TSource, TTarget>(Expression<Func<TSource, bool>> sourceExpression
