@@ -18,10 +18,23 @@ If you find this project useful, please give it a star! It helps us grow and imp
 
 ## Some Basic Examples
 
-### DateExtension
+### Filter Convert
 ```csharp
+var list = new List<ViewModel>
+{
+	new ViewModel { Id = 0, Date = DateTime.Now },
+	new ViewModel { Id = 1, Date = DateTime.Now.AddDays(1) }
+};
+Expression<Func<ViewModel, bool>> filter = list.Where(e => e.Id == 0 && e.Date = DateTime.Now);
 
+var filterConverted = ExpressionConvert.Builder<ViewModel, Entity>(expression);
 ```
+
+## Usage Reference
+
+For more details, access the test project that has the practical implementation of the package's use.
+
+https://github.com/EliasRMJ/Quiron.EntityFrameworkCore.Test
 
 Supports:
 
