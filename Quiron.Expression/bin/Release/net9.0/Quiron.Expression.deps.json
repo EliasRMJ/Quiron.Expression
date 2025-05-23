@@ -6,7 +6,7 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v9.0": {
-      "Quiron.Expression/1.0.1": {
+      "Quiron.Expression/1.1.14": {
         "dependencies": {
           "System.Linq": "4.3.0",
           "System.Linq.Expressions": "4.3.0"
@@ -185,7 +185,7 @@
     }
   },
   "libraries": {
-    "Quiron.Expression/1.0.1": {
+    "Quiron.Expression/1.1.14": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

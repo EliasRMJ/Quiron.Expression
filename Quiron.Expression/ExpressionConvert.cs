@@ -74,10 +74,10 @@ namespace Quiron.Expression
             return [.. includes];
         }
 
-        public virtual Expression<Func<TTarget, object>>[] ConvertIncludesExpression<TTarget>(string[]? includeProperty
+        public virtual Expression<Func<TTarget, object>>[]? ConvertIncludesExpression<TTarget>(string[]? includeProperty
             , ParameterExpression? parameter = null)
         {
-            ArgumentNullException.ThrowIfNull(includeProperty);
+            if (includeProperty is null) return null;
 
             var includes = new List<Expression<Func<TTarget, object>>>();
             var parameterIn = parameter is null ? System.Linq.Expressions.Expression.Parameter(typeof(TTarget), "inc") : parameter;
@@ -93,7 +93,8 @@ namespace Quiron.Expression
                 else if (propList.Length > 1)
                 {
                     var newIncludes = ConvertIncludesExpression<TTarget>(propList, parameterIn);
-                    includes.AddRange(newIncludes);
+                    if (newIncludes is not null)
+                        includes.AddRange(newIncludes);
                 }
             }
 

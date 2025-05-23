@@ -10,7 +10,7 @@ namespace Quiron.Expression
         Expression<Func<TTarget, object>>[] ConvertIncludesExpression<TSource, TTarget>(Expression<Func<TSource, object>>[] viewModelIncludes
             , string findIn = "", string[]? includeProperty = null);
 
-        Expression<Func<TTarget, object>>[] ConvertIncludesExpression<TTarget>(string[]? includeProperty
+        Expression<Func<TTarget, object>>[]? ConvertIncludesExpression<TTarget>(string[]? includeProperty
             , ParameterExpression? parameter = null);
     }
 }
