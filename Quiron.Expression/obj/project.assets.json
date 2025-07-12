@@ -28,7 +28,7 @@
           "System.Runtime": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.3/System.Collections.dll": {
+          "ref/netstandard1.3/_._": {
             "related": ".xml"
           }
         }
@@ -84,7 +84,7 @@
           "System.Runtime.Extensions": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.6/System.Linq.dll": {
+          "ref/netstandard1.6/_._": {
             "related": ".xml"
           }
         },
@@ -1688,7 +1688,6 @@
   },
   "projectFileDependencyGroups": {
     "net9.0": [
-      "System.Linq >= 4.3.0",
       "System.Linq.Expressions >= 4.3.0"
     ]
   },
@@ -1697,7 +1696,7 @@
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
-    "version": "1.1.14",
+    "version": "1.2.1-rc",
     "restore": {
       "projectUniqueName": "C:\\Meus Projetos GUI\\SGS V_W\\Quiron.Expression\\Quiron.Expression\\Quiron.Expression.csproj",
       "projectName": "Quiron.Expression",
@@ -1743,10 +1742,6 @@
       "net9.0": {
         "targetAlias": "net9.0",
         "dependencies": {
-          "System.Linq": {
-            "target": "Package",
-            "version": "[4.3.0, )"
-          },
           "System.Linq.Expressions": {
             "target": "Package",
             "version": "[4.3.0, )"

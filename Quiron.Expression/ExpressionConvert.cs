@@ -100,6 +100,32 @@ namespace Quiron.Expression
 
             return [.. includes];
         }
+
+        public virtual Expression<Func<T, bool>> CreateCustomFilters<T>(
+            IEnumerable<(string PropertyName, object? Value, ExpressionType Operator)> conditions)
+        {
+            System.Linq.Expressions.Expression? final = null;
+            var parameter = System.Linq.Expressions.Expression.Parameter(typeof(T), "filter");
+
+            foreach (var (propertyName, value, expressionType) in conditions)
+            {
+                if (value is null || (value is string s && string.IsNullOrWhiteSpace(s)))
+                    continue;
+
+                var property = System.Linq.Expressions.Expression.Property(parameter, propertyName);
+                var constant = GetConstantValue(property, value);
+                var comparison = ParseExpressionType(property, constant, expressionType);
+
+                final = final is null
+                    ? comparison
+                    : expressionType is ExpressionType.OrElse or ExpressionType.Or
+                        ? System.Linq.Expressions.Expression.OrElse(final, comparison)
+                        : System.Linq.Expressions.Expression.AndAlso(final, comparison);
+            }
+
+            return System.Linq.Expressions.Expression.Lambda<Func<T, bool>>(final ?? 
+                System.Linq.Expressions.Expression.Constant(true), parameter);
+        }
         #endregion
 
         #region Private methods
@@ -243,7 +269,8 @@ namespace Quiron.Expression
                 ExpressionType.GreaterThanOrEqual => System.Linq.Expressions.Expression.GreaterThanOrEqual(property, constant),
                 ExpressionType.LessThan => System.Linq.Expressions.Expression.LessThan(property, constant),
                 ExpressionType.LessThanOrEqual => System.Linq.Expressions.Expression.LessThanOrEqual(property, constant),
-                ExpressionType.Call => System.Linq.Expressions.Expression.Call(property, typeof(string).GetMethod("Contains", [typeof(string)])!, constant),
+                ExpressionType.Call when property.Type == typeof(string) =>
+                        System.Linq.Expressions.Expression.Call(property, typeof(string).GetMethod("Contains", [typeof(string)])!, constant),
                 _ => throw new NotSupportedException($"Operator '{operatorx}' isn't supported!")
             };
         }

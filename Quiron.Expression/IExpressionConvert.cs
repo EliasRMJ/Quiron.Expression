@@ -12,5 +12,8 @@ namespace Quiron.Expression
 
         Expression<Func<TTarget, object>>[]? ConvertIncludesExpression<TTarget>(string[]? includeProperty
             , ParameterExpression? parameter = null);
+
+        Expression<Func<T, bool>> CreateCustomFilters<T>(
+            IEnumerable<(string PropertyName, object? Value, ExpressionType Operator)> conditions);
     }
 }
