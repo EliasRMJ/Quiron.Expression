@@ -1696,7 +1696,7 @@
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
-    "version": "1.2.2-rc",
+    "version": "1.2.3-rc",
     "restore": {
       "projectUniqueName": "C:\\Meus Projetos GUI\\SGS V_W\\Quiron.Expression\\Quiron.Expression\\Quiron.Expression.csproj",
       "projectName": "Quiron.Expression",

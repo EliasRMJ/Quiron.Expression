@@ -14,9 +14,9 @@
     <PackageTags>quiron,expression</PackageTags>
     <PackageReleaseNotes>Create a new method to add CreateCustomFilters</PackageReleaseNotes>
     <NeutralLanguage>en</NeutralLanguage>
-    <Version>1.2.02-rc</Version>
-    <AssemblyVersion>1.2.02.1</AssemblyVersion>
-    <FileVersion>1.2.02.1</FileVersion>
+    <Version>1.2.03-rc</Version>
+    <AssemblyVersion>1.2.03.1</AssemblyVersion>
+    <FileVersion>1.2.03.1</FileVersion>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <ApplicationIcon>quiron-package.ico</ApplicationIcon>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
