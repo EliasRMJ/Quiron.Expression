@@ -104,10 +104,19 @@ namespace Quiron.Expression
         public virtual Expression<Func<T, bool>> CreateCustomFilters<T>(
             IEnumerable<(string PropertyName, object? Value, ExpressionType Operator)> conditions)
         {
+            var extendedConditions = conditions.Select(c =>
+                (c.PropertyName, c.Value, c.Operator, ExpressionType.AndAlso));
+
+            return CreateCustomFilters<T>(extendedConditions);
+        }
+
+        public virtual Expression<Func<T, bool>> CreateCustomFilters<T>(
+            IEnumerable<(string PropertyName, object? Value, ExpressionType Operator, ExpressionType AndOrET)> conditions)
+        {
             System.Linq.Expressions.Expression? final = null;
             var parameter = System.Linq.Expressions.Expression.Parameter(typeof(T), "filter");
 
-            foreach (var (propertyName, value, expressionType) in conditions)
+            foreach (var (propertyName, value, expressionType, andOrET) in conditions)
             {
                 if (value is null || (value is string s && string.IsNullOrWhiteSpace(s)))
                     continue;
@@ -118,12 +127,12 @@ namespace Quiron.Expression
 
                 final = final is null
                     ? comparison
-                    : expressionType is ExpressionType.OrElse or ExpressionType.Or
+                    : andOrET is ExpressionType.OrElse or ExpressionType.Or
                         ? System.Linq.Expressions.Expression.OrElse(final, comparison)
                         : System.Linq.Expressions.Expression.AndAlso(final, comparison);
             }
 
-            return System.Linq.Expressions.Expression.Lambda<Func<T, bool>>(final ?? 
+            return System.Linq.Expressions.Expression.Lambda<Func<T, bool>>(final ??
                 System.Linq.Expressions.Expression.Constant(true), parameter);
         }
         #endregion

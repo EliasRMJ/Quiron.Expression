@@ -16,11 +16,11 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCopyrightAttribute("MIT")]
 [assembly: System.Reflection.AssemblyDescriptionAttribute("Package used to convert filters coming from a \'ViewModel\' coming from the control" +
     "ler to an expression recognized by one understood in the \'EntityFrameworkCore\'.")]
-[assembly: System.Reflection.AssemblyFileVersionAttribute("1.2.01.1")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.2.01-rc+f5bbbae1ffa5398ba82a9027ffeb998fe68c8962")]
+[assembly: System.Reflection.AssemblyFileVersionAttribute("1.2.02.1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.2.02-rc+2f0b5b3b5e382a9bca89136adafb30fbc31709f4")]
 [assembly: System.Reflection.AssemblyProductAttribute("Quiron.Expression")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Quiron.Expression")]
-[assembly: System.Reflection.AssemblyVersionAttribute("1.2.01.1")]
+[assembly: System.Reflection.AssemblyVersionAttribute("1.2.02.1")]
 [assembly: System.Reflection.AssemblyMetadataAttribute("RepositoryUrl", "https://github.com/EliasRMJ/Quiron.Expression")]
 [assembly: System.Resources.NeutralResourcesLanguageAttribute("en")]
 
