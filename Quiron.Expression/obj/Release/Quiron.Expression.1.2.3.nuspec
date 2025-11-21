@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>Quiron.Expression</id>
-    <version>1.2.3-rc</version>
+    <version>1.2.3</version>
     <title>Quiron.Expression</title>
     <authors>EliasRMJ</authors>
     <license type="expression">MIT</license>
@@ -10,7 +10,7 @@
     <icon>quiron-package.png</icon>
     <readme>README.md</readme>
     <description>Package used to convert filters coming from a 'ViewModel' coming from the controller to an expression recognized by one understood in the 'EntityFrameworkCore'.</description>
-    <releaseNotes>Create a new method to add CreateCustomFilters</releaseNotes>
+    <releaseNotes>Adds new control methods for assembling clauses in the filter.</releaseNotes>
     <copyright>MIT</copyright>
     <tags>quiron,expression</tags>
     <repository type="git" url="https://github.com/EliasRMJ/Quiron.Expression" commit="a3dda89b946e0b0d404a3ffb3fc95b50cf097c00" />

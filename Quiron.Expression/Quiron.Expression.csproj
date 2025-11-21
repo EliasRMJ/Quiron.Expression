@@ -12,9 +12,9 @@
     <PackageIcon>quiron-package.png</PackageIcon>
     <RepositoryType>git</RepositoryType>
     <PackageTags>quiron,expression</PackageTags>
-    <PackageReleaseNotes>Create a new method to add CreateCustomFilters</PackageReleaseNotes>
+    <PackageReleaseNotes>Adds new control methods for assembling clauses in the filter.</PackageReleaseNotes>
     <NeutralLanguage>en</NeutralLanguage>
-    <Version>1.2.03-rc</Version>
+    <Version>1.2.03</Version>
     <AssemblyVersion>1.2.03.1</AssemblyVersion>
     <FileVersion>1.2.03.1</FileVersion>
     <PackageReadmeFile>README.md</PackageReadmeFile>
