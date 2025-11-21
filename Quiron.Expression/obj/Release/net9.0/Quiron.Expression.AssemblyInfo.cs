@@ -17,7 +17,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyDescriptionAttribute("Package used to convert filters coming from a \'ViewModel\' coming from the control" +
     "ler to an expression recognized by one understood in the \'EntityFrameworkCore\'.")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.2.03.1")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.2.03-rc+db0722a4fcf673bc69cf0c06ab90c2456fac65e2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.2.03-rc+430785f25779b5285c63488c216c98b6a26a5534")]
 [assembly: System.Reflection.AssemblyProductAttribute("Quiron.Expression")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Quiron.Expression")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.2.03.1")]

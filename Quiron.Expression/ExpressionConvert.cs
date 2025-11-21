@@ -135,9 +135,41 @@ namespace Quiron.Expression
             return System.Linq.Expressions.Expression.Lambda<Func<T, bool>>(final ??
                 System.Linq.Expressions.Expression.Constant(true), parameter);
         }
+
+        public virtual Expression<Func<T, bool>> AndIf<T>(Expression<Func<T, bool>> expr, bool condition
+            , Expression<Func<T, bool>> newExpr)
+        {
+            return condition ? And(expr, newExpr) : expr;
+        }
+
+        public virtual Expression<Func<T, bool>> OrIf<T>(Expression<Func<T, bool>> expr, bool condition
+            , Expression<Func<T, bool>> newExpr)
+        {
+            return condition ? Or(expr, newExpr) : expr;
+        }
         #endregion
 
         #region Private methods
+        private static Expression<Func<T, bool>> And<T>(Expression<Func<T, bool>> expr1
+           , Expression<Func<T, bool>> expr2)
+        {
+            var param = System.Linq.Expressions.Expression.Parameter(typeof(T));
+            var body = System.Linq.Expressions.Expression.AndAlso(System.Linq.Expressions.Expression.Invoke(expr1, param)
+                , System.Linq.Expressions.Expression.Invoke(expr2, param));
+
+            return System.Linq.Expressions.Expression.Lambda<Func<T, bool>>(body, param);
+        }
+
+        private static Expression<Func<T, bool>> Or<T>(Expression<Func<T, bool>> expr1
+           , Expression<Func<T, bool>> expr2)
+        {
+            var param = System.Linq.Expressions.Expression.Parameter(typeof(T));
+            var body = System.Linq.Expressions.Expression.Or(System.Linq.Expressions.Expression.Invoke(expr1, param)
+                , System.Linq.Expressions.Expression.Invoke(expr2, param));
+
+            return System.Linq.Expressions.Expression.Lambda<Func<T, bool>>(body, param);
+        }
+
         private static MemberExpression? ConvertInclude<TTarget>(List<Expression<Func<TTarget, object>>> includes, System.Linq.Expressions.Expression? member
             , ParameterExpression parameter, string propertyName)
         {

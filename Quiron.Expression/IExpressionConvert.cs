@@ -18,5 +18,11 @@ namespace Quiron.Expression
 
         Expression<Func<T, bool>> CreateCustomFilters<T>(
             IEnumerable<(string PropertyName, object? Value, ExpressionType Operator, ExpressionType AndOrET)> conditions);
+
+        Expression<Func<T, bool>> AndIf<T>(this Expression<Func<T, bool>> expr, bool condition
+            , Expression<Func<T, bool>> newExpr);
+
+        Expression<Func<T, bool>> OrIf<T>(this Expression<Func<T, bool>> expr, bool condition
+            , Expression<Func<T, bool>> newExpr);
     }
 }

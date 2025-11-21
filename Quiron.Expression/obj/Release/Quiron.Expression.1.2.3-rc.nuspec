@@ -13,7 +13,7 @@
     <releaseNotes>Create a new method to add CreateCustomFilters</releaseNotes>
     <copyright>MIT</copyright>
     <tags>quiron,expression</tags>
-    <repository type="git" url="https://github.com/EliasRMJ/Quiron.Expression" commit="db0722a4fcf673bc69cf0c06ab90c2456fac65e2" />
+    <repository type="git" url="https://github.com/EliasRMJ/Quiron.Expression" commit="430785f25779b5285c63488c216c98b6a26a5534" />
     <dependencies>
       <group targetFramework="net9.0">
         <dependency id="System.Linq.Expressions" version="4.3.0" exclude="Build,Analyzers" />
