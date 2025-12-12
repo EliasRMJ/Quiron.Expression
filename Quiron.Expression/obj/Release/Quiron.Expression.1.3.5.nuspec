@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>Quiron.Expression</id>
-    <version>1.2.3</version>
+    <version>1.3.5</version>
     <title>Quiron.Expression</title>
     <authors>EliasRMJ</authors>
     <license type="expression">MIT</license>
@@ -10,7 +10,7 @@
     <icon>quiron-package.png</icon>
     <readme>README.md</readme>
     <description>Package used to convert filters coming from a 'ViewModel' coming from the controller to an expression recognized by one understood in the 'EntityFrameworkCore'.</description>
-    <releaseNotes>Adds new control methods for assembling clauses in the filter.</releaseNotes>
+    <releaseNotes>[Bugfix] Add verification type - Nullable.GetUnderlyingType.</releaseNotes>
     <copyright>MIT</copyright>
     <tags>quiron,expression</tags>
     <repository type="git" url="https://github.com/EliasRMJ/Quiron.Expression" commit="c62928153f706f02053dbd56dd7fed4474e3d54f" />

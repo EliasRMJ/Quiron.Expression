@@ -5,7 +5,7 @@
   },
   "projects": {
     "C:\\Meus Projetos GUI\\SGS V_W\\Quiron.Expression\\Quiron.Expression\\Quiron.Expression.csproj": {
-      "version": "1.2.3",
+      "version": "1.3.5",
       "restore": {
         "projectUniqueName": "C:\\Meus Projetos GUI\\SGS V_W\\Quiron.Expression\\Quiron.Expression\\Quiron.Expression.csproj",
         "projectName": "Quiron.Expression",
@@ -72,7 +72,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.100-rc.2.25502.107/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.101/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

@@ -294,7 +294,7 @@ namespace Quiron.Expression
             if (value is null)
                 return System.Linq.Expressions.Expression.Constant(value);
 
-            var targetType = propertyIn.Type;
+            var targetType = Nullable.GetUnderlyingType(propertyIn.Type) ?? propertyIn.Type;
             object? typedValue = targetType.IsEnum ? Enum.ToObject(targetType, value!) : Convert.ChangeType(value, targetType);
 
             return System.Linq.Expressions.Expression.Constant(typedValue, targetType);
