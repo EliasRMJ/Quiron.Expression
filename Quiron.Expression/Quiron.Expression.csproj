@@ -12,11 +12,11 @@
     <PackageIcon>quiron-package.png</PackageIcon>
     <RepositoryType>git</RepositoryType>
     <PackageTags>quiron,expression</PackageTags>
-    <PackageReleaseNotes>[Bugfix] Add verification type - Nullable.GetUnderlyingType.</PackageReleaseNotes>
+    <PackageReleaseNotes>Additional improvements have been added to create more complex filters in Lambda..</PackageReleaseNotes>
     <NeutralLanguage>en</NeutralLanguage>
-    <Version>1.3.05</Version>
-    <AssemblyVersion>1.3.05.1</AssemblyVersion>
-    <FileVersion>1.3.05.1</FileVersion>
+    <Version>1.4.02</Version>
+    <AssemblyVersion>1.4.02.1</AssemblyVersion>
+    <FileVersion>1.4.02.1</FileVersion>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <ApplicationIcon>quiron-package.ico</ApplicationIcon>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
