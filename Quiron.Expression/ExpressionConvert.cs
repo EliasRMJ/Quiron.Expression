@@ -167,6 +167,11 @@ namespace Quiron.Expression
         #endregion
 
         #region Private methods
+        private static bool IsNullableValueType(Type type)
+        {
+            return Nullable.GetUnderlyingType(type) != null;
+        }
+
         private static bool IsContainsMethod(MethodCallExpression methodCall)
         {
             return methodCall.Method.Name == nameof(Enumerable.Contains)
@@ -304,11 +309,20 @@ namespace Quiron.Expression
         {
             try
             {
-                var property = PropertyTry(parameter, propertyPath);
+                var propertyNew = propertyPath;
+                var partsProperty = propertyPath.Split('.');
+                if (partsProperty.Length > 1)
+                {
+                    propertyNew = partsProperty[1] == "Value" || partsProperty[1] == "HasValue"
+                        ? partsProperty[0]
+                        : propertyPath;
+                }
+
+                var property = PropertyTry(parameter, propertyNew);
                 if (property is null)
                 {
                     var castParameter = typeCast is not null ? System.Linq.Expressions.Expression.TypeAs(parameter, typeCast) : parameter;
-                    return PropertyTry(castParameter, propertyPath);
+                    return PropertyTry(castParameter, propertyNew);
                 }
 
                 return property;
@@ -437,6 +451,22 @@ namespace Quiron.Expression
             return System.Linq.Expressions.Expression.Constant(typedValue, targetType);
         }
 
+        private static System.Linq.Expressions.Expression BuildNullableComparison(System.Linq.Expressions.Expression property, ConstantExpression constant
+            , Func<System.Linq.Expressions.Expression, System.Linq.Expressions.Expression, BinaryExpression> comparison)
+        {
+            var underlyingType = Nullable.GetUnderlyingType(property.Type)!;
+            var hasValue = System.Linq.Expressions.Expression.Property(property, "HasValue");
+            var value = System.Linq.Expressions.Expression.Property(property, "Value");
+            var convertedConstant = System.Linq.Expressions.Expression.Constant(
+                Convert.ChangeType(constant.Value!, underlyingType),
+                underlyingType
+            );
+
+            var compare = comparison(value, convertedConstant);
+
+            return System.Linq.Expressions.Expression.AndAlso(hasValue, compare);
+        }
+
         private static System.Linq.Expressions.Expression BuildContainsExpression(System.Linq.Expressions.Expression property
             , System.Linq.Expressions.Expression constant)
         {
@@ -490,7 +520,26 @@ namespace Quiron.Expression
 
             if (operatorx == ExpressionType.Call && IsEnumerableButNotString(constant.Type))
                 return BuildContainsExpression(property, constant);
-    
+
+            if (IsNullableValueType(property.Type) && operatorx is
+                   ExpressionType.GreaterThan
+                or ExpressionType.GreaterThanOrEqual
+                or ExpressionType.LessThan
+                or ExpressionType.LessThanOrEqual)
+            {
+                return BuildNullableComparison(
+                    property,
+                    constant,
+                    operatorx switch
+                    {
+                        ExpressionType.GreaterThan => System.Linq.Expressions.Expression.GreaterThan,
+                        ExpressionType.GreaterThanOrEqual => System.Linq.Expressions.Expression.GreaterThanOrEqual,
+                        ExpressionType.LessThan => System.Linq.Expressions.Expression.LessThan,
+                        ExpressionType.LessThanOrEqual => System.Linq.Expressions.Expression.LessThanOrEqual,
+                        _ => throw new NotSupportedException($"Operator '{operatorx}' isn't supported!")
+                    });
+            }
+
             return operatorx switch
             {
                 ExpressionType.Equal => System.Linq.Expressions.Expression.Equal(property, constant),
@@ -499,8 +548,7 @@ namespace Quiron.Expression
                 ExpressionType.GreaterThanOrEqual => System.Linq.Expressions.Expression.GreaterThanOrEqual(property, constant),
                 ExpressionType.LessThan => System.Linq.Expressions.Expression.LessThan(property, constant),
                 ExpressionType.LessThanOrEqual => System.Linq.Expressions.Expression.LessThanOrEqual(property, constant),
-                ExpressionType.Call when property.Type == typeof(string) =>
-                        System.Linq.Expressions.Expression.Call(property, typeof(string).GetMethod("Contains", [typeof(string)])!, constant),
+                ExpressionType.Call when property.Type == typeof(string) => System.Linq.Expressions.Expression.Call(property, typeof(string).GetMethod("Contains", [typeof(string)])!, constant),
                 _ => throw new NotSupportedException($"Operator '{operatorx}' isn't supported!")
             };
         }
