@@ -14,9 +14,9 @@
     <PackageTags>quiron,expression</PackageTags>
     <PackageReleaseNotes>[Bugfix] Additional improvements have been added to create more complex filters in Lambda..</PackageReleaseNotes>
     <NeutralLanguage>en</NeutralLanguage>
-    <Version>1.4.03</Version>
-    <AssemblyVersion>1.4.03.1</AssemblyVersion>
-    <FileVersion>1.4.03.1</FileVersion>
+    <Version>1.4.04</Version>
+    <AssemblyVersion>1.4.04.1</AssemblyVersion>
+    <FileVersion>1.4.04.1</FileVersion>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <ApplicationIcon>quiron-package.ico</ApplicationIcon>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>

@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\Meus Projetos GUI\\SGS V_W\\Quiron.Expression\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{783A5DF4-B83E-48E5-8A8C-EBA5C5F74773}|Quiron.Expression\\Quiron.Expression.csproj|c:\\meus projetos gui\\sgs v_w\\quiron.expression\\quiron.expression\\quiron.expression.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{783A5DF4-B83E-48E5-8A8C-EBA5C5F74773}|Quiron.Expression\\Quiron.Expression.csproj|solutionrelative:quiron.expression\\quiron.expression.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{783A5DF4-B83E-48E5-8A8C-EBA5C5F74773}|Quiron.Expression\\Quiron.Expression.csproj|c:\\meus projetos gui\\sgs v_w\\quiron.expression\\quiron.expression\\expressionconvert.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{783A5DF4-B83E-48E5-8A8C-EBA5C5F74773}|Quiron.Expression\\Quiron.Expression.csproj|solutionrelative:quiron.expression\\expressionconvert.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{783A5DF4-B83E-48E5-8A8C-EBA5C5F74773}|Quiron.Expression\\Quiron.Expression.csproj|c:\\meus projetos gui\\sgs v_w\\quiron.expression\\quiron.expression\\quiron.expression.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{783A5DF4-B83E-48E5-8A8C-EBA5C5F74773}|Quiron.Expression\\Quiron.Expression.csproj|solutionrelative:quiron.expression\\quiron.expression.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,7 +18,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 9,
+          "SelectedChildIndex": 10,
           "Children": [
             {
               "$type": "Bookmark",
@@ -58,26 +58,26 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Quiron.Expression.csproj",
               "DocumentMoniker": "C:\\Meus Projetos GUI\\SGS V_W\\Quiron.Expression\\Quiron.Expression\\Quiron.Expression.csproj",
               "RelativeDocumentMoniker": "Quiron.Expression\\Quiron.Expression.csproj",
               "ToolTip": "C:\\Meus Projetos GUI\\SGS V_W\\Quiron.Expression\\Quiron.Expression\\Quiron.Expression.csproj",
               "RelativeToolTip": "Quiron.Expression\\Quiron.Expression.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAgAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
               "WhenOpened": "2025-12-25T15:05:39.055Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "ExpressionConvert.cs",
               "DocumentMoniker": "C:\\Meus Projetos GUI\\SGS V_W\\Quiron.Expression\\Quiron.Expression\\ExpressionConvert.cs",
               "RelativeDocumentMoniker": "Quiron.Expression\\ExpressionConvert.cs",
               "ToolTip": "C:\\Meus Projetos GUI\\SGS V_W\\Quiron.Expression\\Quiron.Expression\\ExpressionConvert.cs",
               "RelativeToolTip": "Quiron.Expression\\ExpressionConvert.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAHoAAAB6AAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-23T11:13:40.929Z",
               "EditorCaption": ""

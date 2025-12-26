@@ -131,8 +131,16 @@ namespace Quiron.Expression
                     continue;
 
                 var property = GetPropertyExpressionWithAny(parameter, propertyName, value, expressionType);
-                var constant = GetConstantValue(property, value);
-                var comparison = ParseExpressionType(property, constant, expressionType);
+                System.Linq.Expressions.Expression? comparison;
+                if (property.Type != typeof(bool))
+                {
+                    var constant = GetConstantValue(property, value);
+                    comparison = ParseExpressionType(property, constant, expressionType);
+                }
+                else
+                {
+                    comparison = property;
+                }
 
                 final = final is null
                     ? comparison
@@ -142,9 +150,7 @@ namespace Quiron.Expression
             }
 
             return System.Linq.Expressions.Expression.Lambda<Func<T, bool>>(
-                final ?? System.Linq.Expressions.Expression.Constant(true),
-                parameter
-            );
+                final ?? System.Linq.Expressions.Expression.Constant(true), parameter);
         }
 
         public virtual Expression<Func<T, bool>> AndIf<T>(Expression<Func<T, bool>> expr, bool condition
