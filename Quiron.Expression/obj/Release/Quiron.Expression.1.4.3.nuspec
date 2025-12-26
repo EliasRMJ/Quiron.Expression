@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Quiron.Expression</id>
+    <version>1.4.3</version>
+    <title>Quiron.Expression</title>
+    <authors>EliasRMJ</authors>
+    <license type="expression">MIT</license>
+    <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
+    <icon>quiron-package.png</icon>
+    <readme>README.md</readme>
+    <description>Package used to convert filters coming from a 'ViewModel' coming from the controller to an expression recognized by one understood in the 'EntityFrameworkCore'.</description>
+    <releaseNotes>[Bugfix] Additional improvements have been added to create more complex filters in Lambda..</releaseNotes>
+    <copyright>MIT</copyright>
+    <tags>quiron,expression</tags>
+    <repository type="git" url="https://github.com/EliasRMJ/Quiron.Expression" commit="584f9320f98af945a1e4f38bed46adf1efb44b8e" />
+    <dependencies>
+      <group targetFramework="net9.0">
+        <dependency id="System.Linq.Expressions" version="4.3.0" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+    <contentFiles>
+      <files include="any/net9.0/quiron-package.ico" buildAction="Content" />
+    </contentFiles>
+  </metadata>
+  <files>
+    <file src="C:\Meus Projetos GUI\SGS V_W\Quiron.Expression\Quiron.Expression\bin\Release\net9.0\Quiron.Expression.dll" target="lib\net9.0\Quiron.Expression.dll" />
+    <file src="C:\Meus Projetos GUI\SGS V_W\Quiron.Expression\Quiron.Expression\quiron-package.ico" target="content\quiron-package.ico" />
+    <file src="C:\Meus Projetos GUI\SGS V_W\Quiron.Expression\Quiron.Expression\quiron-package.ico" target="contentFiles\any\net9.0\quiron-package.ico" />
+    <file src="C:\Meus Projetos GUI\SGS V_W\Quiron.Expression\Quiron.Expression\quiron-package.png" target="\quiron-package.png" />
+    <file src="C:\Meus Projetos GUI\SGS V_W\Quiron.Expression\README.md" target="\README.md" />
+  </files>
+</package>

@@ -59,12 +59,12 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Quiron.Expression",
+              "Title": "Quiron.Expression.csproj",
               "DocumentMoniker": "C:\\Meus Projetos GUI\\SGS V_W\\Quiron.Expression\\Quiron.Expression\\Quiron.Expression.csproj",
               "RelativeDocumentMoniker": "Quiron.Expression\\Quiron.Expression.csproj",
               "ToolTip": "C:\\Meus Projetos GUI\\SGS V_W\\Quiron.Expression\\Quiron.Expression\\Quiron.Expression.csproj",
               "RelativeToolTip": "Quiron.Expression\\Quiron.Expression.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAUAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
               "WhenOpened": "2025-12-25T15:05:39.055Z",
               "EditorCaption": ""
@@ -77,7 +77,7 @@
               "RelativeDocumentMoniker": "Quiron.Expression\\ExpressionConvert.cs",
               "ToolTip": "C:\\Meus Projetos GUI\\SGS V_W\\Quiron.Expression\\Quiron.Expression\\ExpressionConvert.cs",
               "RelativeToolTip": "Quiron.Expression\\ExpressionConvert.cs",
-              "ViewState": "AgIAACsAAAAAAAAAAAAgwDIAAABCAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAHoAAAB6AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-23T11:13:40.929Z",
               "EditorCaption": ""

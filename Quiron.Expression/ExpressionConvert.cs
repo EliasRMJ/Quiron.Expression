@@ -39,8 +39,6 @@ namespace Quiron.Expression
                     ArgumentNullException.ThrowIfNull(propertyRootClass);
 
                     propertyIn = PropertyExist(propertyRootClass!, property, typeCast);
-
-                    ArgumentNullException.ThrowIfNull(propertyIn);
                 }
 
                 System.Linq.Expressions.Expression? comparison = null;
@@ -163,9 +161,32 @@ namespace Quiron.Expression
         #endregion
 
         #region Private methods
+        private static bool IsContainsMethod(MethodCallExpression methodCall)
+        {
+            return methodCall.Method.Name == nameof(Enumerable.Contains)
+                   && methodCall.Arguments.Count.Equals(2);
+        }
+
+        private static bool IsAnyMethod(MethodCallExpression methodCall)
+        {
+            return methodCall.Method.Name == nameof(Enumerable.Any)
+                && methodCall.Arguments.Count.Equals(2)
+                && methodCall.Arguments[1] is LambdaExpression;
+        }
+
+        private static bool IsInOperator(object? value)
+        {
+            return value is System.Collections.IEnumerable && value is not string;
+        }
+
         private static bool IsEnumerableButNotString(Type type)
         {
             return type != typeof(string) && typeof(System.Collections.IEnumerable).IsAssignableFrom(type);
+        }
+
+        private static bool IsEnumerableValue(object value)
+        {
+            return value is System.Collections.IEnumerable && value is not string;
         }
 
         private static System.Linq.Expressions.Expression GetPropertyExpression(System.Linq.Expressions.Expression parameter
@@ -201,7 +222,22 @@ namespace Quiron.Expression
                     return BuildAnyExpression(collection, elementType, innerPath, value, operatorx);
                 }
 
-                current = System.Linq.Expressions.Expression.Property(current, propertyInfo);
+                var propertyIn = System.Linq.Expressions.Expression.Property(current, propertyInfo);
+
+                if (propertyInfo.PropertyType == typeof(string) ||
+                    propertyInfo.PropertyType == typeof(int) ||
+                    propertyInfo.PropertyType == typeof(long) ||
+                    propertyInfo.PropertyType == typeof(Enum) ||
+                    propertyInfo.PropertyType == typeof(DateOnly) ||
+                    propertyInfo.PropertyType == typeof(DateTime))
+                {
+                    var constant = GetConstantValue(propertyIn, value);
+                    current = ParseExpressionType(propertyIn, constant, operatorx);
+                }
+                else
+                {
+                    current = propertyIn;
+                }
             }
 
             return current;
@@ -311,7 +347,16 @@ namespace Quiron.Expression
             }
             else if (expression is MethodCallExpression methodCall)
             {
-                string? propertyName = GetPropertyName(methodCall.Object!);
+                if (methodCall.Arguments is null)
+                    return;
+
+                if (IsAnyMethod(methodCall))
+                {
+                    ParseAnyExpression(methodCall, conditions, expressionType);
+                    return;
+                }
+
+                string? propertyName = GetPropertyName(IsContainsMethod(methodCall) ? methodCall.Arguments[1] : methodCall.Object!);
                 object? value = methodCall.Arguments.Count > 0 ? GetConstantValue(methodCall.Arguments[0]) : null;
 
                 if (!string.IsNullOrEmpty(propertyName))
@@ -321,11 +366,14 @@ namespace Quiron.Expression
 
         private static string? GetPropertyName(System.Linq.Expressions.Expression expression)
         {
-            if (expression is MemberExpression memberExpression)
-                return memberExpression.Member.Name;
+            if (expression is UnaryExpression unary)
+                return GetPropertyName(unary.Operand);
 
-            if (expression is UnaryExpression unaryExpression && unaryExpression.Operand is MemberExpression innerMember)
-                return innerMember.Member.Name;
+            if (expression is MemberExpression member)
+            {
+                var parent = GetPropertyName(member.Expression!);
+                return string.IsNullOrEmpty(parent) ? member.Member.Name : $"{parent}.{member.Member.Name}";
+            }
 
             return null;
         }
@@ -349,10 +397,36 @@ namespace Quiron.Expression
         private static ConstantExpression GetConstantValue(System.Linq.Expressions.Expression propertyIn, object? value)
         {
             if (value is null)
-                return System.Linq.Expressions.Expression.Constant(value);
+                return System.Linq.Expressions.Expression.Constant(null, propertyIn.Type);
 
             var targetType = Nullable.GetUnderlyingType(propertyIn.Type) ?? propertyIn.Type;
-            object? typedValue = targetType.IsEnum ? Enum.ToObject(targetType, value!) : Convert.ChangeType(value, targetType);
+
+            if (IsEnumerableValue(value))
+            {
+                var enumerable = ((System.Collections.IEnumerable)value)
+                    .Cast<object>()
+                    .Select(val =>
+                    {
+                        if (targetType.IsEnum)
+                        {
+                            var numericValue = Convert.ChangeType(val, Enum.GetUnderlyingType(targetType));
+                            return Enum.ToObject(targetType, numericValue);
+                        }
+
+                        return Convert.ChangeType(val, targetType);
+                    })
+                    .ToList();
+
+                var listType = typeof(List<>).MakeGenericType(targetType);
+                var typedList = Activator.CreateInstance(listType)!;
+
+                foreach (var item in enumerable)
+                    listType.GetMethod("Add")!.Invoke(typedList, [item]);
+
+                return System.Linq.Expressions.Expression.Constant(typedList, listType);
+            }
+
+            object typedValue = targetType.IsEnum ? Enum.ToObject(targetType, value) : Convert.ChangeType(value, targetType);
 
             return System.Linq.Expressions.Expression.Constant(typedValue, targetType);
         }
@@ -376,18 +450,30 @@ namespace Quiron.Expression
         {
             var parameter = System.Linq.Expressions.Expression.Parameter(elementType, "inner");
             var innerProperty = GetPropertyExpression(parameter, innerPropertyPath);
-            var constant = System.Linq.Expressions.Expression.Constant(value, innerProperty.Type);
-            var comparison = ParseExpressionType(innerProperty, constant, operatorx);
+
+            System.Linq.Expressions.Expression body;
+
+            if (operatorx == ExpressionType.Call && IsInOperator(value))
+            {
+                var constant = System.Linq.Expressions.Expression.Constant(value, typeof(IEnumerable<>)
+                    .MakeGenericType(innerProperty.Type));
+
+                body = BuildContainsExpression(innerProperty, constant);
+            }
+            else
+            {
+                var constant = GetConstantValue(innerProperty, value);
+                body = ParseExpressionType(innerProperty, constant, operatorx);
+            }
 
             var anyMethod = typeof(Enumerable)
                 .GetMethods(BindingFlags.Static | BindingFlags.Public)
-                .First(method => method.Name == nameof(Enumerable.Any)
-                              && method.IsGenericMethodDefinition
-                              && method.GetParameters().Length == 2)
+                .First(m => m.Name == nameof(Enumerable.Any)
+                         && m.GetParameters().Length == 2)
                 .MakeGenericMethod(elementType);
 
             return System.Linq.Expressions.Expression.Call(anyMethod, collection,
-                System.Linq.Expressions.Expression.Lambda(comparison, parameter));
+                System.Linq.Expressions.Expression.Lambda(body, parameter));
         }
 
         private static System.Linq.Expressions.Expression ParseExpressionType(System.Linq.Expressions.Expression property
@@ -396,6 +482,9 @@ namespace Quiron.Expression
             if (property.Type == typeof(bool))
                 return property;
 
+            if (operatorx == ExpressionType.Call && IsEnumerableButNotString(constant.Type))
+                return BuildContainsExpression(property, constant);
+    
             return operatorx switch
             {
                 ExpressionType.Equal => System.Linq.Expressions.Expression.Equal(property, constant),
@@ -406,10 +495,53 @@ namespace Quiron.Expression
                 ExpressionType.LessThanOrEqual => System.Linq.Expressions.Expression.LessThanOrEqual(property, constant),
                 ExpressionType.Call when property.Type == typeof(string) =>
                         System.Linq.Expressions.Expression.Call(property, typeof(string).GetMethod("Contains", [typeof(string)])!, constant),
-                ExpressionType.Call =>
-                    BuildContainsExpression(property, constant),
                 _ => throw new NotSupportedException($"Operator '{operatorx}' isn't supported!")
             };
+        }
+
+        private static void ParseAnyExpression(MethodCallExpression methodCall
+            , List<(string property, ExpressionType operatorx, object? value, ExpressionType expressionType)> conditions
+            , ExpressionType expressionType)
+        {
+            var collectionExpression = methodCall.Arguments[0];
+            var collectionName = GetPropertyName(collectionExpression);
+
+            if (collectionName is null)
+                return;
+
+            var lambda = (LambdaExpression)methodCall.Arguments[1];
+            var body = lambda.Body;
+
+            if (body is BinaryExpression binary)
+            {
+                var innerProperty = GetPropertyName(binary.Left);
+                var value = GetConstantValue(binary.Right);
+
+                if (!string.IsNullOrEmpty(innerProperty))
+                {
+                    conditions.Add((
+                        $"{collectionName}.{innerProperty}",
+                        binary.NodeType,
+                        value,
+                        expressionType
+                    ));
+                }
+            }
+            else if (body is MethodCallExpression innerMethod)
+            {
+                var innerProperty = GetPropertyName(innerMethod.Object!);
+                var value = GetConstantValue(innerMethod.Arguments[0]);
+
+                if (!string.IsNullOrEmpty(innerProperty))
+                {
+                    conditions.Add((
+                        $"{collectionName}.{innerProperty}",
+                        ExpressionType.Call,
+                        value,
+                        expressionType
+                    ));
+                }
+            }
         }
 
         private static BinaryExpression CreateExpressionType(System.Linq.Expressions.Expression? finalExpression
